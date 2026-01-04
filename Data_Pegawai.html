@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>SIPENA | Biodata Pegawai</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS tambahan untuk navigasi yang lebih menarik */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        /* Sidebar styling yang lebih menarik */
+        .sidebar {
+            background: linear-gradient(180deg, #1a237e 0%, #283593 30%, #3949ab 100%);
+            box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar h4 {
+            color: #bbdefb;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(187, 222, 251, 0.2);
+            position: relative;
+        }
+        
+        .sidebar h4 i {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        
+        .sidebar h4::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #64b5f6;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .sidebar li {
+            margin-bottom: 5px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            color: #e3f2fd;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+        }
+        
+        .nav-link i {
+            margin-right: 12px;
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .nav-link:hover::before {
+            left: 100%;
+        }
+        
+        .nav-link:hover {
+            background: rgba(100, 181, 246, 0.15);
+            color: #ffffff;
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            color: white;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+            font-weight: 600;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+        
+        /* Topbar styling improvement */
+        .topbar {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .topbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05));
+        }
+        
+        .brand {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .brand strong {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 1px;
+        }
+        
+        .brand span {
+            font-size: 12px;
+            color: #bbdefb;
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .user-info span {
+            margin-left: 0;
+            font-weight: 500;
+        }
+        
+        .user-info .name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 3px;
+            color: white;
+        }
+        
+        /* Content styling improvement */
+        .content {
+            background: #f8fafd;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eef2f7;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card h2 {
+            color: #1a237e;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e3f2fd;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h2 i {
+            margin-right: 10px;
+            color: #2196f3;
+        }
+        
+        /* Table styling improvement */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .data-table th {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1a237e;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #90caf9;
+        }
+        
+        .data-table td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f5fbff;
+        }
+        
+        .data-table .no {
+            width: 50px;
+            text-align: center;
+            font-weight: 600;
+            color: #2196f3;
+        }
+        
+        /* Form styling improvement */
+        .form-group label {
+            color: #455a64;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .form-group label i {
+            margin-right: 8px;
+            color: #2196f3;
+            font-size: 12px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #fcfdfe;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2196f3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+            background: white;
+        }
+        
+        .form-group input:read-only,
+        .form-group textarea:read-only {
+            background-color: #f9f9f9;
+            color: #666;
+        }
+        
+        /* Profile header improvement */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            margin-right: 25px;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-header h2 {
+            color: #1a237e;
+            margin-bottom: 5px;
+            border: none;
+            padding: 0;
+        }
+        
+        .profile-header p {
+            color: #546e7a;
+            font-size: 16px;
+            background: #e3f2fd;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        /* Badge for active status */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            
+            .sidebar li {
+                flex: 1;
+                min-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+    <div class="brand">
+        <strong><i class="fas fa-database"></i> SIPENA</strong>
+        <span>Perangkat Daerah | Sistem Informasi Data Pegawai</span>
+    </div>
+    <div class="user-info">
+        <span><i class="fas fa-id-card"></i> NIP : 198408252015021001</span>
+        <span class="name"><i class="fas fa-user-circle"></i> AGUS ALVIANTO, S.Pt</span>
+    </div>
+</header>
+
+<div class="layout">
+    <!-- SIDEBAR dengan navigasi yang menarik -->
+    <aside class="sidebar">
+        <h4><i class="fas fa-folder-open"></i> DATA PEGAWAI</h4>
+        <ul>
+            <li><button class="nav-link active" data-page="biodata">
+                <i class="fas fa-user"></i> Biodata Pegawai
+            </button></li>
+            <li><button class="nav-link" data-page="keluarga">
+                <i class="fas fa-users"></i> Data Keluarga
+            </button></li>
+            <li><button class="nav-link" data-page="kontak">
+                <i class="fas fa-address-book"></i> Data Kontak
+            </button></li>
+            <li><button class="nav-link" data-page="pengangkatan">
+                <i class="fas fa-file-contract"></i> Pengangkatan CPNS/PNS
+            </button></li>
+            <li><button class="nav-link" data-page="kartu">
+                <i class="fas fa-credit-card"></i> Data Kartu
+            </button></li>
+        </ul>
+
+        <h4><i class="fas fa-history"></i> RIWAYAT PEGAWAI</h4>
+        <ul>
+            <li><button class="nav-link" data-page="kepangkatan">
+                <i class="fas fa-chart-line"></i> Kepangkatan
+            </button></li>
+            <li><button class="nav-link" data-page="jabatan">
+                <i class="fas fa-briefcase"></i> Jabatan
+            </button></li>
+            <li><button class="nav-link" data-page="pendidikan">
+                <i class="fas fa-graduation-cap"></i> Pendidikan Formal
+            </button></li>
+            <li><button class="nav-link" data-page="diklat">
+                <i class="fas fa-book-reader"></i> Pendidikan & Pelatihan
+            </button></li>
+            <li><button class="nav-link" data-page="skp">
+                <i class="fas fa-star"></i> SKP
+            </button></li>
+            <li><button class="nav-link" data-page="kinerja">
+                <i class="fas fa-chart-bar"></i> Kinerja Periodik
+            </button></li>
+            <li><button class="nav-link" data-page="penghargaan">
+                <i class="fas fa-award"></i> Penghargaan
+            </button></li>
+        </ul>
+    </aside>
+
+    <!-- CONTENT - Semua halaman dalam satu file -->
+    <main class="content">
+        
+        <!-- HALAMAN 1: BIODATA -->
+        <div id="biodata" class="page-section active">
+            <div class="card profile-card">
+                <div class="profile-header">
+                    <img src="https://via.placeholder.com/150/1a237e/FFFFFF?text=AA" alt="Foto Pegawai">
+                    <div>
+                        <h2><i class="fas fa-user"></i> AGUS ALVIANTO, S.Pt</h2>
+                        <p><i class="fas fa-id-badge"></i> NIP 198408252015021001</p>
+                        <span class="status-badge status-active"><i class="fas fa-check-circle"></i> AKTIF</span>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Tempat Lahir</label>
+                        <input type="text" value="BLITAR" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i> Tanggal Lahir</label>
+                        <input type="text" value="25 Agustus 1984" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-venus-mars"></i> Jenis Kelamin</label>
+                        <input type="text" value="Laki-laki" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-pray"></i> Agama</label>
+                        <input type="text" value="Islam" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-heart"></i> Status Pernikahan</label>
+                        <select>
+                            <option selected>Nikah</option>
+                            <option>Belum Nikah</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label><i class="fas fa-home"></i> Alamat Lengkap</label>
+                        <textarea rows="3" readonly>Lingk. Ngebrak RT/RW 3/3, Kel. Tawangsari, Kec. Sukorejo, Kota Blitar, Jawa Timur</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HALAMAN 2: KELUARGA -->
+        <div id="keluarga" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-users"></i> Data Keluarga</h2>
+                <div class="profile-body">
+                    <div class="form-group">
+                        <label><i class="fas fa-user-friends"></i> Nama Pasangan</label>
+                        <input type="text" value="Dian Merdeka Wati, Amd." readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-heart"></i> Tanggal Menikah</label>
+                        <input type="text" value="15 Juni 2010" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-ring"></i> Status Perkawinan</label>
+                        <input type="text" value="Kawin" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-baby"></i> Jumlah Anak</label>
+                        <input type="text" value="-" readonly>
+                    </div>
+                    
+                   
+                </div>
+            </div>
+        </div>
+
+        <!-- HALAMAN 3: KONTAK -->
+        <div id="kontak" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-address-book"></i> Data Kontak</h2>
+                <div class="profile-body">
+                    <div class="form-group">
+                        <label><i class="fas fa-mobile-alt"></i> Nomor HP/WhatsApp</label>
+                        <input type="text" value="0821-4056-4333" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email Kantor</label>
+                        <input type="text" value="agus.alvianto@blitarkab.go.id" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope-open"></i> Email Pribadi</label>
+                        <input type="text" value="agus.alvianto@gmail.com" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Telepon Rumah</label>
+                        <input type="text" value="(0342) 123456" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-exclamation-triangle"></i> Alamat Email Darurat</label>
+                        <input type="text" value="dian.merdeka.gmail.com" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-ambulance"></i> Kontak Darurat (HP)</label>
+                        <input type="text" value="082282047337" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HALAMAN 4: PENGANGKATAN -->
+        <div id="pengangkatan" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-file-contract"></i> Pengangkatan CPNS/PNS</h2>
+                <table class="data-table">
+                    <tr>
+                        <th class="no">No</th>
+                        <th>Jenis Pengangkatan</th>
+                        <th>Nomor SK</th>
+                        <th>Tanggal SK</th>
+                        <th>Pejabat Penandatangan</th>
+                        <th>Golongan/Ruang</th>
+                    </tr>
+                    <tr>
+                        <td class="no">1</td>
+                        <td><span style="color: #2196f3; font-weight: 600;">CPNS</span></td>
+                        <td>822.3/KP.01.1/1234/2015</td>
+                        <td>15 Maret 2015</td>
+                        <td>Kepala BKD Kabupaten Blitar</td>
+                        <td><span class="status-badge" style="background: #e3f2fd; color: #1565c0;">III/a</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no">2</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">PNS</span></td>
+                        <td>822.3/KP.02.2/5678/2016</td>
+                        <td>01 Februari 2016</td>
+                        <td>Kepala BKD Kabupaten Blitar</td>
+                        <td><span class="status-badge" style="background: #e3f2fd; color: #1565c0;">III/a</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no">3</td>
+                        <td><span style="color: #ff9800; font-weight: 600;">Kenaikan Pangkat</span></td>
+                        <td>822.3/KP.03.3/9012/2019</td>
+                        <td>1 April 2019</td>
+                        <td>Bupati Blitar</td>
+                        <td><span class="status-badge" style="background: #fff3e0; color: #ef6c00;">III/b</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- HALAMAN 5: DATA KARTU -->
+        <div id="kartu" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-credit-card"></i> Data Kartu Identitas</h2>
+                <div class="profile-body">
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card"></i> Nomor KTP</label>
+                        <input type="text" value="3505182508840001" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-file-invoice-dollar"></i> Nomor NPWP</label>
+                        <input type="text" value="75.123.456.7-123.000" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-heartbeat"></i> Nomor BPJS Kesehatan</label>
+                        <input type="text" value="0001234567890" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-briefcase-medical"></i> Nomor BPJS Ketenagakerjaan</label>
+                        <input type="text" value="123456789012" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-piggy-bank"></i> Nomor Taspen</label>
+                        <input type="text" value="TP.123456789" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-university"></i> Nomor Rekening Bank</label>
+                        <input type="text" value="123-456-7890 (BRI)" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HALAMAN 6: KEPANGKATAN -->
+        <div id="kepangkatan" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-chart-line"></i> Riwayat Kepangkatan</h2>
+                <table class="data-table">
+                    <tr>
+                        <th class="no">No</th>
+                        <th>Pangkat/Golongan</th>
+                        <th>Nomor SK</th>
+                        <th>Tanggal SK</th>
+                        <th>TMT Pangkat</th>
+                        <th>Masa Kerja Golongan</th>
+                    </tr>
+                    <tr>
+                        <td class="no">1</td>
+                        <td><strong>Penata Muda / III-a</strong></td>
+                        <td>822.3/KP.01.1/1234/2015</td>
+                        <td>15 Maret 2015</td>
+                        <td>1 April 2015</td>
+                        <td><span class="status-badge" style="background: #f5f5f5; color: #666;">0 Tahun 0 Bulan</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no">2</td>
+                        <td><strong>Penata Muda Tk.I / III-b</strong></td>
+                        <td>822.3/KP.03.3/9012/2019</td>
+                        <td>1 April 2019</td>
+                        <td>1 April 2019</td>
+                        <td><span class="status-badge" style="background: #f5f5f5; color: #666;">4 Tahun 0 Bulan</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no">3</td>
+                        <td><strong>Penata / III-c</strong></td>
+                        <td>822.3/KP.05.5/3456/2023</td>
+                        <td>1 April 2023</td>
+                        <td>1 April 2023</td>
+                        <td><span class="status-badge" style="background: #f5f5f5; color: #666;">1 Tahun 0 Bulan</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- HALAMAN 7: JABATAN -->
+        <div id="jabatan" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-briefcase"></i> Riwayat Jabatan</h2>
+                <table class="data-table">
+                    <tr>
+                        <th class="no">No</th>
+                        <th>Jabatan</th>
+                        <th>Unit Kerja</th>
+                        <th>Nomor SK</th>
+                        <th>Tanggal SK</th>
+                        <th>TMT Jabatan</th>
+                    </tr>
+                    <tr>
+                        <td class="no">1</td>
+                        <td><strong>Staf Sub Bagian Umum</strong></td>
+                        <td>Dinas Pertanian Kota Blitar</td>
+                        <td>822.3/JB.01.1/2345/2015</td>
+                        <td>1 Mei 2015</td>
+                        <td>1 Mei 2015</td>
+                    </tr>
+                    <tr>
+                        <td class="no">2</td>
+                        <td><strong>Kasubag Kepegawaian & Umum</strong></td>
+                        <td>Dinas Pertanian Kota Blitar</td>
+                        <td>822.3/JB.02.2/6789/2018</td>
+                        <td>1 Oktober 2018</td>
+                        <td>1 Oktober 2018</td>
+                    </tr>
+                    <tr>
+                        <td class="no">3</td>
+                        <td><strong>Plt. Kepala Seksi Produksi</strong></td>
+                        <td>Dinas Pertanian Kota Blitar</td>
+                        <td>822.3/JB.03.3/1234/2022</td>
+                        <td>1 Februari 2022</td>
+                        <td>1 Februari 2022</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- HALAMAN 8: PENDIDIKAN FORMAL -->
+        <div id="pendidikan" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-graduation-cap"></i> Riwayat Pendidikan Formal</h2>
+                <div class="riwayat-card">
+                    <h3><i class="fas fa-school"></i> Pendidikan Dasar dan Menengah</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th class="no">No</th>
+                            <th>Jenjang</th>
+                            <th>Nama Sekolah</th>
+                            <th>Jurusan</th>
+                            <th>Tahun Lulus</th>
+                            <th>Nilai/Ijazah</th>
+                        </tr>
+                        <tr>
+                            <td class="no">1</td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">SD</span></td>
+                            <td>SD Negeri 1 Blitar</td>
+                            <td>-</td>
+                            <td>1996</td>
+                            <td><strong>8,25</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="no">2</td>
+                            <td><span class="status-badge" style="background: #e3f2fd; color: #1565c0;">SMP</span></td>
+                            <td>SMP Negeri 3 Blitar</td>
+                            <td>-</td>
+                            <td>1999</td>
+                            <td><strong>8,10</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="no">3</td>
+                            <td><span class="status-badge" style="background: #f3e5f5; color: #7b1fa2;">SMA</span></td>
+                            <td>SMA Negeri 1 Blitar</td>
+                            <td>IPA</td>
+                            <td>2002</td>
+                            <td><strong>8,35</strong></td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="riwayat-card">
+                    <h3><i class="fas fa-university"></i> Pendidikan Tinggi</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th class="no">No</th>
+                            <th>Jenjang</th>
+                            <th>Perguruan Tinggi</th>
+                            <th>Program Studi</th>
+                            <th>Tahun Lulus</th>
+                            <th>IPK</th>
+                        </tr>
+                        <tr>
+                            <td class="no">1</td>
+                            <td><span class="status-badge" style="background: #fff3e0; color: #ef6c00;">S1</span></td>
+                            <td>Universitas Brawijaya Malang</td>
+                            <td>Peternakan</td>
+                            <td>2007</td>
+                            <td><strong>3,45</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="no">2</td>
+                            <td><span class="status-badge" style="background: #e0f2f1; color: #00695c;">S2</span></td>
+                            <td>Universitas Gadjah Mada</td>
+                            <td>Manajemen Publik</td>
+                            <td>2014</td>
+                            <td><strong>3,75</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- HALAMAN 9: PENDIDIKAN & PELATIHAN -->
+        <div id="diklat" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-book-reader"></i> Riwayat Pendidikan & Pelatihan</h2>
+                <table class="data-table">
+                    <tr>
+                        <th class="no">No</th>
+                        <th>Nama Diklat/Pelatihan</th>
+                        <th>Penyelenggara</th>
+                        <th>Tahun</th>
+                        <th>Durasi</th>
+                        <th>Sertifikat</th>
+                    </tr>
+                    <tr>
+                        <td class="no">1</td>
+                        <td><strong>Diklat Prajabatan CPNS</strong></td>
+                        <td>LAN Pusat</td>
+                        <td>2015</td>
+                        <td><span class="status-badge" style="background: #f5f5f5; color: #666;">3 Bulan</span></td>
+                        <td>No. 123/DP/2015</td>
+                    </tr>
+                    <tr>
+                        <td class="no">2</td>
+                        <td><strong>Pelatihan Manajemen Kepegawaian</strong></td>
+                        <td>BKD Kota Blitar</td>
+                        <td>2017</td>
+                        <td><span class="status-badge" style="background: #f5f5f5; color: #666;">1 Minggu</span></td>
+                        <td>No. 456/PMK/2017</td>
+                    </tr>
+                    <tr>
+                        <td class="no">3</td>
+                        <td><strong>Diklat Kepemimpinan Tk. II</strong></td>
+                        <td>LAN Pusat</td>
+                        <td>2021</td>
+                        <td><span class="status-badge" style="background: #f5f5f5; color: #666;">2 Bulan</span></td>
+                        <td>No. 789/DK2/2021</td>
+                    </tr>
+                    <tr>
+                        <td class="no">4</td>
+                        <td><strong>Pelatihan Sistem Informasi Manajemen</strong></td>
+                        <td>Kemenkominfo</td>
+                        <td>2022</td>
+                        <td><span class="status-badge" style="background: #f5f5f5; color: #666;">2 Minggu</span></td>
+                        <td>No. 012/SIM/2022</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- HALAMAN 10: SKP -->
+        <div id="skp" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-star"></i> Sasaran Kinerja Pegawai (SKP)</h2>
+                <table class="data-table">
+                    <tr>
+                        <th class="no">No</th>
+                        <th>Tahun</th>
+                        <th>Jabatan</th>
+                        <th>Nilai SKP</th>
+                        <th>Perilaku Kerja</th>
+                        <th>Nilai Prestasi Kerja</th>
+                        <th>Keterangan</th>
+                    </tr>
+                    <tr>
+                        <td class="no">1</td>
+                        <td><strong>2020</strong></td>
+                        <td>Kasubag Kepegawaian</td>
+                        <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">88,50</span></td>
+                        <td><span class="status-badge" style="background: #e3f2fd; color: #1565c0;">Baik</span></td>
+                        <td>88,50</td>
+                        <td><span class="status-badge" style="background: #e3f2fd; color: #1565c0;">Baik</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no">2</td>
+                        <td><strong>2021</strong></td>
+                        <td>Kasubag Kepegawaian</td>
+                        <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">90,25</span></td>
+                        <td><span class="status-badge" style="background: #e3f2fd; color: #1565c0;">Baik</span></td>
+                        <td>90,25</td>
+                        <td><span class="status-badge" style="background: #e3f2fd; color: #1565c0;">Baik</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no">3</td>
+                        <td><strong>2022</strong></td>
+                        <td>Plt. Kasi Produksi</td>
+                        <td><span class="status-badge" style="background: #c8e6c9; color: #1b5e20;">92,75</span></td>
+                        <td><span class="status-badge" style="background: #bbdefb; color: #0d47a1;">Sangat Baik</span></td>
+                        <td>92,75</td>
+                        <td><span class="status-badge" style="background: #bbdefb; color: #0d47a1;">Sangat Baik</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no">4</td>
+                        <td><strong>2023</strong></td>
+                        <td>Plt. Kasi Produksi</td>
+                        <td><span class="status-badge" style="background: #c8e6c9; color: #1b5e20;">94,20</span></td>
+                        <td><span class="status-badge" style="background: #bbdefb; color: #0d47a1;">Sangat Baik</span></td>
+                        <td>94,20</td>
+                        <td><span class="status-badge" style="background: #bbdefb; color: #0d47a1;">Sangat Baik</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- HALAMAN 11: KINERJA PERIODIK -->
+        <div id="kinerja" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-chart-bar"></i> Kinerja Periodik & Penilaian</h2>
+                <div class="riwayat-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Penilaian Triwulan 2023</h3>
+                    <table class="data-table">
+                        <tr>
+                            <th>Periode</th>
+                            <th>Target</th>
+                            <th>Realisasi</th>
+                            <th>Persentase</th>
+                            <th>Evaluasi</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Triwulan I (Jan-Mar)</strong></td>
+                            <td>85%</td>
+                            <td>87%</td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">102,4%</span></td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">Melampaui Target</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Triwulan II (Apr-Jun)</strong></td>
+                            <td>85%</td>
+                            <td>89%</td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">104,7%</span></td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">Melampaui Target</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Triwulan III (Jul-Sep)</strong></td>
+                            <td>90%</td>
+                            <td>92%</td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">102,2%</span></td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">Melampaui Target</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Triwulan IV (Okt-Des)</strong></td>
+                            <td>90%</td>
+                            <td>95%</td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">105,6%</span></td>
+                            <td><span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">Melampaui Target</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- HALAMAN 12: PENGHARGAAN -->
+        <div id="penghargaan" class="page-section">
+            <div class="card">
+                <h2><i class="fas fa-award"></i> Penghargaan & Tanda Jasa</h2>
+                <table class="data-table">
+                    <tr>
+                        <th class="no">No</th>
+                        <th>Nama Penghargaan</th>
+                        <th>Pemberi Penghargaan</th>
+                        <th>Tahun</th>
+                        <th>Tingkat</th>
+                        <th>Keterangan</th>
+                    </tr>
+                    <tr>
+                        <td class="no">1</td>
+                        <td><strong>Satyalancana Karya Satya 10 Tahun</strong></td>
+                        <td>Presiden Republik Indonesia</td>
+                        <td>2020</td>
+                        <td><span class="status-badge" style="background: #ffecb3; color: #ff8f00;">Nasional</span></td>
+                        <td>No. 123/SLK/X/2020</td>
+                    </tr>
+                    <tr>
+                        <td class="no">2</td>
+                        <td><strong>Pegawai Berprestasi Kota Blitar</strong></td>
+                        <td>Wali Kota Blitar</td>
+                        <td>2021</td>
+                        <td><span class="status-badge" style="background: #c8e6c9; color: #2e7d32;">Kota</span></td>
+                        <td>No. 456/PB/2021</td>
+                    </tr>
+                    <tr>
+                        <td class="no">3</td>
+                        <td><strong>Inovator Pelayanan Publik</strong></td>
+                        <td>Gubernur Jawa Timur</td>
+                        <td>2022</td>
+                        <td><span class="status-badge" style="background: #bbdefb; color: #1565c0;">Provinsi</span></td>
+                        <td>No. 789/IPP/2022</td>
+                    </tr>
+                    <tr>
+                        <td class="no">4</td>
+                        <td><strong>Lencana Dharma Karya</strong></td>
+                        <td>Menteri Pertanian</td>
+                        <td>2023</td>
+                        <td><span class="status-badge" style="background: #ffecb3; color: #ff8f00;">Nasional</span></td>
+                        <td>No. 012/LDK/2023</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Script untuk navigasi yang bisa diklik -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Ambil semua tombol navigasi
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Ambil semua section halaman
+    const pageSections = document.querySelectorAll('.page-section');
+    
+    // Fungsi untuk menampilkan halaman tertentu
+    function showPage(pageId) {
+        console.log('Menampilkan halaman:', pageId);
+        
+        // Sembunyikan semua halaman
+        pageSections.forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        // Tampilkan halaman yang dipilih
+        const targetSection = document.getElementById(pageId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+            console.log('Halaman ditemukan dan ditampilkan');
+        } else {
+            console.error('Halaman tidak ditemukan:', pageId);
+        }
+        
+        // Update status aktif pada navigasi
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-page') === pageId) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    // Tambahkan event listener ke setiap tombol navigasi
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const pageId = this.getAttribute('data-page');
+            console.log('Tombol diklik, data-page:', pageId);
+            showPage(pageId);
+        });
+    });
+    
+    // Tampilkan halaman default saat pertama kali load
+    showPage('biodata');
+    console.log('Halaman default biodata ditampilkan');
+});
+</script>
+
+</body>
+</html>

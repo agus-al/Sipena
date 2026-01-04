@@ -1,0 +1,86 @@
+
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: #f7f7f7;
+}
+
+
+.header {
+    background: #128f02;
+    color: #fff;
+    padding: 30px 40px;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo-img {
+    height: 50px;
+}
+.nav-menu li {
+    display: inline;
+    margin-left: 20px;
+}
+.nav-menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+.hero-section {
+    background: url('PegawaiKec.Gandusari.jpg') center/cover no-repeat;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #b8e21f;
+    font-size: 50px;
+    text-align: center;
+    padding: 100px;
+}
+.btn-primary {
+    background: #128f02;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+
+section {
+    padding: 40px 20px;
+}
+.program-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.program-card, .news-card {
+    background: #3bd826;
+    padding: 20px;
+    border-radius: 5px;
+    width: calc(50% - 20px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.program-card h3, .news-card h4 {
+    margin-bottom: 10px;
+}
+
+
+.footer {
+    background: #128f02;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
